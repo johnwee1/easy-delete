@@ -7,8 +7,8 @@
 using namespace std;
 namespace fs = filesystem;
 
-string file_ext = ".raf";
-unordered_set<string> file_exts = {".raf",".dng",".jpg",".jpeg",".png",".cr2"};
+string file_ext = ".RAF";
+unordered_set<string> file_exts = {".RAF",".DNG",".JPG",".JPEG",".PNG",".CR2",".png",".jpg",".dng",".jpeg",".cr2",".arw",".ARW"};
 
 void easy_delete(){
     fs::path p = fs::current_path();
