@@ -8,6 +8,7 @@ using namespace std;
 namespace fs = filesystem;
 
 string file_ext = ".raf";
+unordered_set<string> file_exts = {".raf",".dng",".jpg",".jpeg",".png",".cr2"};
 
 void easy_delete(){
     fs::path p = fs::current_path();
@@ -17,17 +18,17 @@ void easy_delete(){
     unordered_set<string> multiple_occ;
     unordered_set<string> duplicates = {};
     for(auto& entry : fs::directory_iterator(p)){
-        if(entry==p/"easy-delete.exe" || entry==p/"easy-delete.cpp") continue;
+        if(file_exts.find(entry.path().extension().string())==file_exts.end()) continue;
         if (!entry.is_regular_file()) continue;
         string x = entry.path().stem().string();
         if(occurences.find(x)==occurences.end()){
             occurences[x] = 1;
+            duplicates.insert(x);
         }
         else{
             occurences[x] = occurences[x]+1;
-            if (occurences[x]==2) duplicates.insert(x);
-            else if(duplicates.find(x)!=duplicates.end() && occurences[x] > 2){
-                duplicates.erase(x);
+            if (occurences[x]==2) duplicates.erase(x);
+            else if(occurences[x] > 2){
                 if(multiple_occ.find(x)==multiple_occ.end())multiple_occ.insert(x);
             }
             else continue;
